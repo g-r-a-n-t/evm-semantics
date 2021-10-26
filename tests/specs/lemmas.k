@@ -47,8 +47,8 @@ module LEMMAS
 
     rule #isPrecompiledAccount(#newAddr(_, _), _) => false [simplification]
 
-    rule 0 <=Int #asWord(_WS)             => true [simplification]
-    rule         #asWord(_WS) <Int pow256 => true [simplification]
+    rule 0 <=Int #asWord(_BA)             => true [simplification]
+    rule         #asWord(_BA) <Int pow256 => true [simplification]
 
   // ########################
   // Keccak
