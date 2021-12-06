@@ -1932,8 +1932,8 @@ In the YellowPaper, each opcode is defined to consume zero gas unless specified 
                      orBool OP ==K RETURN
                      orBool OP ==K REVERT
 
-    syntax Int ::= #memoryUsageUpdate ( Int , Int , Int ) [function, functional]
- // ----------------------------------------------------------------------------
+    syntax Int ::= #memoryUsageUpdate ( Int , Int , Int ) [function, functional, smtlib(memoryUsageUpdate)]
+ // -------------------------------------------------------------------------------------------------------
     rule [#memoryUsageUpdate.none]: #memoryUsageUpdate(MU,     _, WIDTH) => MU                                       requires notBool 0 <Int WIDTH
     rule [#memoryUsageUpdate.some]: #memoryUsageUpdate(MU, START, WIDTH) => maxInt(MU, (START +Int WIDTH) up/Int 32) requires         0 <Int WIDTH
 ```
