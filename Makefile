@@ -51,7 +51,7 @@ export PLUGIN_SUBMODULE
         test-vm test-rest-vm test-all-vm test-bchain test-rest-bchain test-all-bchain test-node                                  \
         test-prove test-failing-prove                                                                                            \
         test-prove-benchmarks test-prove-functional test-prove-opcodes test-prove-erc20 test-prove-bihu test-prove-examples      \
-        test-prove-mcd test-klab-prove                                                                                           \
+        test-prove-mcd test-klab-prove test-prove-basic-blocks test-prove-optimizations                                          \
         test-parse test-failure                                                                                                  \
         test-interactive test-interactive-help test-interactive-run test-interactive-prove test-interactive-search               \
         media media-pdf metropolis-theme                                                                                         \
@@ -498,9 +498,11 @@ prove_bihu_tests         := $(filter-out $(prove_failing_tests), $(wildcard $(pr
 prove_examples_tests     := $(filter-out $(prove_failing_tests), $(wildcard $(prove_specs_dir)/examples/*-spec.k) $(wildcard $(prove_specs_dir)/examples/*-spec.md))
 prove_mcd_tests          := $(filter-out $(prove_failing_tests), $(wildcard $(prove_specs_dir)/mcd/*-spec.k))
 prove_optimization_tests := $(filter-out $(prove_failing_tests), tests/specs/opcodes/evm-optimizations-spec.md)
+prove_basic_blocks_tests := $(filter-out $(prove_failing_tests), $(wildcard $(prove_specs_dir)/basic-blocks/*-spec.k))
 
 ## best-effort list of provex kompiled definitions to produce ahead of time
 provex_definitions :=                                                                                              \
+                      tests/specs/basic-blocks/verification/haskell/verification-kompiled/timestamp                \
                       tests/specs/benchmarks/functional-spec/haskell/functional-spec-kompiled/timestamp            \
                       tests/specs/benchmarks/functional-spec/java/functional-spec-kompiled/timestamp               \
                       tests/specs/benchmarks/verification/haskell/verification-kompiled/timestamp                  \
@@ -531,7 +533,7 @@ provex_definitions :=                                                           
                       tests/specs/opcodes/verification/java/verification-kompiled/timestamp
 build-provex: $(provex_definitions)
 
-test-prove: test-prove-benchmarks test-prove-functional test-prove-opcodes test-prove-erc20 test-prove-bihu test-prove-examples test-prove-mcd test-prove-optimizations
+test-prove: test-prove-benchmarks test-prove-functional test-prove-opcodes test-prove-erc20 test-prove-bihu test-prove-examples test-prove-mcd test-prove-optimizations test-prove-basic-blocks
 test-prove-benchmarks:    $(prove_benchmarks_tests:=.prove)
 test-prove-functional:    $(prove_functional_tests:=.prove)
 test-prove-opcodes:       $(prove_opcodes_tests:=.prove)
@@ -540,6 +542,7 @@ test-prove-bihu:          $(prove_bihu_tests:=.prove)
 test-prove-examples:      $(prove_examples_tests:=.prove)
 test-prove-mcd:           $(prove_mcd_tests:=.prove)
 test-prove-optimizations: $(prove_optimization_tests:=.prove)
+test-prove-basic-blocks:  $(prove_basic_blocks_tests:=.prove)
 
 test-failing-prove: $(prove_failing_tests:=.prove)
 
