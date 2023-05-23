@@ -52,7 +52,7 @@ export PLUGIN_FULL_PATH
         test test-all test-conformance test-rest-conformance test-all-conformance test-slow-conformance test-failing-conformance             \
         test-vm test-rest-vm test-all-vm test-bchain test-rest-bchain test-all-bchain test-node                                              \
         test-prove test-failing-prove test-foundry-kcfg-diff                                                                                 \
-        test-prove-benchmarks test-prove-functional test-prove-opcodes test-prove-erc20 test-prove-bihu test-prove-examples test-prove-smoke \
+        test-prove-benchmarks test-prove-functional test-prove-opcodes test-prove-erc20 test-prove-fe test-prove-bihu test-prove-examples test-prove-smoke \
         test-prove-mcd test-klab-prove                                                                                                       \
         test-parse test-failure test-foundry-kompile test-foundry-prove test-foundry-bmc-prove test-foundry-list                             \
         test-interactive test-interactive-help test-interactive-run test-interactive-prove test-interactive-search                           \
@@ -458,6 +458,8 @@ tests/specs/examples/solidity-code-spec%:             KPROVE_EXT    =  md
 tests/specs/examples/solidity-code-spec%:             KPROVE_FILE   =  solidity-code-spec
 tests/specs/examples/erc20-spec%:                     KPROVE_EXT    =  md
 tests/specs/examples/erc20-spec%:                     KPROVE_FILE   =  erc20-spec
+tests/specs/examples/fe%:                     	      KPROVE_EXT    =  md
+tests/specs/examples/fe%:                             KPROVE_FILE   =  fe-spec
 tests/specs/examples/erc721-spec%:                    KPROVE_EXT    =  md
 tests/specs/examples/erc721-spec%:                    KPROVE_FILE   =  erc721-spec
 tests/specs/examples/storage-spec%:                   KPROVE_EXT    =  md
@@ -688,6 +690,7 @@ prove_benchmarks_tests   := $(filter-out $(prove_skip_tests), $(wildcard $(prove
 prove_functional_tests   := $(filter-out $(prove_skip_tests), $(wildcard $(prove_specs_dir)/functional/*-spec.k))
 prove_opcodes_tests      := $(filter-out $(prove_skip_tests), $(wildcard $(prove_specs_dir)/opcodes/*-spec.k))
 prove_erc20_tests        := $(filter-out $(prove_skip_tests), $(wildcard $(prove_specs_dir)/erc20/*/*-spec.k))
+prove_fe_tests           := $(filter-out $(prove_skip_tests), $(wildcard $(prove_specs_dir)/fe/${FS_ID}/invariant-spec.k))
 prove_bihu_tests         := $(filter-out $(prove_skip_tests), $(wildcard $(prove_specs_dir)/bihu/*-spec.k))
 prove_examples_tests     := $(filter-out $(prove_skip_tests), $(wildcard $(prove_specs_dir)/examples/*-spec.k) $(wildcard $(prove_specs_dir)/examples/*-spec.md))
 prove_mcd_tests          := $(filter-out $(prove_skip_tests), $(wildcard $(prove_specs_dir)/mcd/*-spec.k))
@@ -725,6 +728,7 @@ test-prove-benchmarks:    $(prove_benchmarks_tests:=.prove)
 test-prove-functional:    $(prove_functional_tests:=.prove)
 test-prove-opcodes:       $(prove_opcodes_tests:=.prove)
 test-prove-erc20:         $(prove_erc20_tests:=.prove)
+test-prove-fe:            $(prove_fe_tests:=.prove)
 test-prove-bihu:          $(prove_bihu_tests:=.prove)
 test-prove-examples:      $(prove_examples_tests:=.prove)
 test-prove-mcd:           $(prove_mcd_tests:=.prove)

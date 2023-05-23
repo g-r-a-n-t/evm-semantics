@@ -60,6 +60,10 @@ module INT-SIMPLIFICATION-COMMON
     rule 0 +Int A => A [simplification]
     rule A +Int 0 => A [simplification]
 
+  // shift
+    rule chop (A >>Int B) <<Int B => A [simplification]
+    rule chop (A <<Int B) >>Int B => A [simplification]
+
   // 3 terms
     rule  (A -Int  B) +Int B  => A [simplification]
     rule   A -Int (A  -Int B) => B [simplification]
