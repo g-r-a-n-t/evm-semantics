@@ -32,6 +32,13 @@ module BYTES-SIMPLIFICATION [symbolic]
     rule [bytes-concat-left-assoc-conc]:    B1:Bytes +Bytes (B2:Bytes +Bytes B3:Bytes) => (B1 +Bytes B2) +Bytes B3 [concrete(B1, B2), symbolic(B3), simplification]
 
     // #buf
+    
+    // fe rules
+    rule #asWord(#range(#buf(32, chop(A <<Int 248)), 0 , 1)) => A [simplification]
+    rule #asWord(#range(#buf(32, chop(A <<Int 240)), 0 , 2)) => A [simplification]
+    rule #asWord(#range(#buf(32, chop(A <<Int 224)), 0 , 4)) => A [simplification]
+    rule #asWord(#range(#buf(32, chop(A <<Int 192)), 0 , 8)) => A [simplification]
+    rule #asWord(#range(#buf(32, chop(A <<Int 128)), 0 , 16)) => A [simplification]
 
     rule [buf-inject-k]:
       #buf(W:Int, X:Int) ==K #buf(W:Int, Y:Int) => X ==Int Y

@@ -19,14 +19,14 @@ module INVARIANT-SPEC
 
                 <callState>
                     // todo: gen this part
-                    <program> #parseByteStack("0x6001601a4311146001146020576001601b431414600114601b57005b600080fd5b00") </program>
-                    <jumpDests> #computeValidJumpDests(#parseByteStack("0x6001601a4311146001146020576001601b431414600114601b57005b600080fd5b00")) </jumpDests>
+                    <program> #parseByteStack("0x60008051602051816001146064578015600114606457828280600114605c57156056575b1560011460525782919081600114604b5750156045575b600114604257005b80fd5b5080603a565b915050603a565b8280fd5b50806023565b505060016023565b8280f3") </program>
+                    <jumpDests> #computeValidJumpDests(#parseByteStack("0x60008051602051816001146064578015600114606457828280600114605c57156056575b1560011460525782919081600114604b5750156045575b600114604257005b80fd5b5080603a565b915050603a565b8280fd5b50806023565b505060016023565b8280f3")) </jumpDests>
 
                     <id> ACCT_ID </id> // contract owner
                     <caller> CALLER_ID </caller> // who called this contract; in the beginning, origin // msg.sender
 
                     // todo: gen this part
-                    <callData> #buf(0, ARG_0) </callData>
+                    <callData> #buf(32, ARG_0) +Bytes #buf(32, ARG_1) </callData>
 
                     <callValue> 0 </callValue>
                     <wordStack> .WordStack => ?_ </wordStack>
@@ -82,7 +82,7 @@ module INVARIANT-SPEC
                     <account>
                         <acctID> ACCT_ID </acctID>
                         <balance> _ </balance>
-                        <code> #parseByteStack("0x6001601a4311146001146020576001601b431414600114601b57005b600080fd5b00") </code>
+                        <code> #parseByteStack("0x60008051602051816001146064578015600114606457828280600114605c57156056575b1560011460525782919081600114604b5750156045575b600114604257005b80fd5b5080603a565b915050603a565b8280fd5b50806023565b505060016023565b8280f3") </code>
                         <storage> _ </storage>
                         <origStorage> _ </origStorage>
                         <nonce> _ </nonce>
@@ -100,7 +100,8 @@ module INVARIANT-SPEC
         andBool 0  <=Int CALLER_ID  andBool CALLER_ID  <Int (2 ^Int 160)
         andBool 0  <=Int ORIGIN_ID  andBool ORIGIN_ID  <Int (2 ^Int 160)
         andBool 0  <=Int CALL_DEPTH andBool CALL_DEPTH <Int 1024
-        andBool 0 ==Int ARG_0
+        andBool (0 ==Int ARG_0 orBool ARG_0 ==Int 1)
+andBool (0 ==Int ARG_1 orBool ARG_1 ==Int 1)
 
 endmodule
 

@@ -60,9 +60,9 @@ module INT-SIMPLIFICATION-COMMON
     rule 0 +Int A => A [simplification]
     rule A +Int 0 => A [simplification]
 
-  // shift
-    rule chop (A >>Int B) <<Int B => A [simplification]
-    rule chop (A <<Int B) >>Int B => A [simplification]
+  // fe rules
+    rule chop(A <<Int B) >>Int B => A [simplification]
+    rule A >>Int B => A /Int (2 ^Int B) requires B <=Int 256 andBool B >=Int 0 [simplification]
 
   // 3 terms
     rule  (A -Int  B) +Int B  => A [simplification]
